@@ -66,8 +66,35 @@ void main()
 			EFilein.close();
 			system("pause");
 			break;
+		case 'e':
+			std::cout << "Please enter input file name, do NOT include \".txt\"\n";
+			std::getline(std::cin, EFilename);
+			EFilename += ".txt";
+			EFilein.open(EFilename);
+			while(!(EFilein.eof()))
+			{
+				std::getline(EFilein, EStringInput);
+				EStringVec.push_back(EStringInput);
+			}
+			EStringInput = "";
+			for(int i = 0; i < EStringVec.size(); i++)
+			{
+				EStringInput += ((JEncryption::EncryptB64(EStringVec[i])) + "\n");
+			}
+			std::cout << EStringInput << "\nWould you like to output this text to an output file? Y\\N\n";
+			std::getline(std::cin, EResponse);
+			EResponse_C = EResponse[0];
+			if (EResponse_C == 'Y' || EResponse_C == 'y')
+			{
+				std::cout << "Output to \"EncryptionOutput.txt\"\n";
+				EFileOut.open("EncryptionOutput.txt");
+				EFileOut << EStringInput << std::endl;
+				EFileOut.close();
+			}
+			EFilein.close();
+			system("pause");
+			break;
 		case 'D':
-
 			std::cout << "Please enter input file name, do NOT include \".txt\"\n";
 			std::getline(std::cin, DFilename);
 			DFilename += ".txt";
@@ -93,7 +120,34 @@ void main()
 				DFileOut.close();
 			}
 			DFilein.close();
-
+			system("pause");
+			break;
+		case 'd':
+			std::cout << "Please enter input file name, do NOT include \".txt\"\n";
+			std::getline(std::cin, DFilename);
+			DFilename += ".txt";
+			DFilein.open(DFilename);
+			while (!(DFilein.eof()))
+			{
+				std::getline(DFilein, DStringInput);
+				DStringVec.push_back(DStringInput);
+			}
+			DStringInput = "";
+			for (int i = 0; i < DStringVec.size(); i++)
+			{
+				DStringInput += ((JEncryption::DecryptB64(DStringVec[i])) + "\n");
+			}
+			std::cout << DStringInput << "\nWould you like to output this text to an output file? Y\\N\n";
+			std::getline(std::cin, DResponse);
+			DResponse_C = DResponse[0];
+			if (DResponse_C == 'Y' || DResponse_C == 'y')
+			{
+				std::cout << "Output to \"DecryptionOutput.txt\"\n";
+				DFileOut.open("DecryptionOutput.txt");
+				DFileOut << DStringInput << std::endl;
+				DFileOut.close();
+			}
+			DFilein.close();
 			system("pause");
 			break;
 		default:
